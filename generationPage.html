@@ -1,0 +1,223 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+     <title>EPRI | Virtual Reality</title>
+    <meta name="description" content="EPRI | Virtual Reality">
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+    <style type="text/css">
+		@font-face{
+			font-family:"Ionicons";
+			src:url("assets/fonts/ionicons.eot?v=2.0.1");
+			src:url("assets/fonts/ionicons.eot?v=2.0.1#iefix") format("embedded-opentype"),url("assets/fonts/ionicons.ttf?v=2.0.1") format("truetype"),url("assets/fonts/ionicons.woff?v=2.0.1") format("woff"),url("assets/fonts/ionicons.svg?v=2.0.1#Ionicons") format("svg");
+			
+			font-weight:normal;
+			font-style:normal
+		}
+		body{font-family:Ionicons;}
+		.visuallyhidden {
+			display: block;
+			border: 0;
+			clip: rect(0 0 0 0);
+			height: 1px;
+			width: 1px;
+			margin: -1px;
+			padding: 0;
+			overflow: hidden;
+			position: absolute !important;
+		} 
+	</style>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+    <script src="easyrtc/easyrtc.js"></script>
+    <script src="https://unpkg.com/networked-aframe@^0.2.0/dist/networked-aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script> 
+
+    <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
+    <script src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script>
+    <script src="/js/spawn-in-circle.component.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.9.1/dist/aframe-extras.min.js"></script>
+	  <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+	  
+
+  <script src="js/aframe-gui.js"></script>
+    <script src="js/fontfaceobserver.js"></script>
+	<script>
+	(function() {
+		// Optimization for Repeat Views
+		if( sessionStorage.criticalFoftFontsLoaded ) {
+			console.log("fonts are already loaded");
+			return;
+		}
+		var guiWebFont = new FontFaceObserver('Fira Sans');
+		Promise.all([guiWebFont.load()]).then(function () {
+			console.log("fonts are loaded");
+			// Optimization for Repeat Views
+			sessionStorage.criticalFoftFontsLoaded = true;
+		});
+	})();
+	</script>
+  </head>
+  <body>
+    <a-scene environment="preset: tron; sunPosition: 1 5 -2; gridColor: #18dbd1; dressing: none" fog="type: linear; color: #AAB; far: 20; near: 5" dressing ="none" dressingScale="0">
+
+   
+     
+    
+   
+
+
+
+    <a-assets>
+<!-- Text Canvas -->
+			<canvas id="canvasObj" crossorigin="anonymous" webkit-playsinline=""></canvas>
+			<img id="logo" src="https://cdn.glitch.com/7317d2b0-96eb-4722-834b-db7d81561000%2FEPRI-logo.png?1543346123589">
+			<img id="gradient" src="assets/gradient.png">
+			<img id="ground" src="assets/ground.png">
+			<a-asset-item id="iconfont" src="assets/fonts/ionicons.ttf"></a-asset-item> 
+
+  </a-assets> 
+
+  <a-light type="directional" color="#FFF" intensity=".5" position="-1 1 2"> </a-light> 
+	
+		<a-sky src="#gradient"></a-sky>
+  		<a-image position="0 -.025 0" height="300" width="300" rotation="90 0 0" src="#ground" repeat="300 300" ></a-image>
+
+<a-gui-flex-container 
+			flex-direction="column" justify-content="center" align-items="normal" component-padding="0.1" 
+			opacity="0.7" width="4.75" height="5.0"
+			position="-4.70 3.157 6.103" rotation="0 120 0">
+		
+
+				<a-gui-button 
+				width="4.0" height="0.75"
+				onclick="window.open('indexAccepted.html',target='_self')" key-code="32"
+				value="EPRI's Virtual Reality Site"
+				font-family="Arial"
+				margin="0 0 0.05 0"
+			>
+			</a-gui-button>
+
+
+			<a-gui-button 
+				width="4.0" height="0.75"
+				onclick="window.open('generationPage.html',target='_self')" key-code="32"
+				value="Generation"
+				font-family="Arial"
+				margin="0 0 0.05 0"
+			>
+			</a-gui-button>
+
+			<a-gui-button 
+				width="4" height="0.75"
+				onclick="window.open('nuclearPage.html',target='_self')"
+				value="Nuclear"
+				font-family="Arial"
+				margin="0 0 0.05 0"
+				>
+			</a-gui-button>
+
+			<a-gui-button 
+				width="4" height="0.75"
+				onclick="window.open('pdu.html',target='_self')"
+				value="Power Delivery & Utilization"
+				font-family="Arial"
+				margin="0 0 0.05 0"
+				>
+			</a-gui-button>
+			
+			
+			<a-gui-button 
+				width="4" height="0.75"
+				onclick="window.open('eePage.html',target='_self')"
+				value="Energy & Environment"
+				font-family="Arial"
+				margin="0 0 0.05 0"
+				>
+			</a-gui-button>
+
+			<a-gui-button 
+				width="4" height="0.75"
+				onclick="window.open('help.asp',target='_self')"
+				value="Help"
+				font-family="Arial"
+				margin="0 0 0.05 0"
+				>
+			</a-gui-button>
+
+
+
+			 
+
+		
+		</a-gui-flex-container>
+
+
+	
+		
+	
+
+		
+
+
+
+
+    <!-- Camera + cursor. -->
+		<a-entity camera="userHeight: 6.6" look-controls="" position="0 2 0" wasd-controls>
+			<a-gui-cursor id="cursor"
+					  raycaster="interval: 1000; objects: [gui-interactable]"
+					  fuse="true" fuse-timeout="2000"
+					  design="dot"
+			>
+			</a-gui-cursor> <!-- /cursor -->
+		</a-entity> <!-- /camera -->
+
+
+	<!-- EPRI Logo -->
+		
+		 <a-box src="" 
+                  position="2.811 5.5 -4.26" 
+                  material="side: double; color: #03c8e2; transparent: true; opacity: 0.5" 
+                  rotation="-18.5 119.2 -0.00" 
+                  scale="8 2 2">
+                    <a-plane src="#logo" rotation="0 -180 0"  position="0 0 -0.51" height="1" width="1" material="transparent: true" ></a-plane>
+                      
+               </a-box>
+  
+  <!-- Factory by Googe, unser Creative Commons 2.0, https://poly.google.com/view/fiTYyyiZXqF -->
+<a-entity position="1.76 0 -12.5" rotation="0 0 0" scale="1 1 1"
+gltf-model="https://cdn.glitch.com/cf491b55-8103-4a25-b3c8-292d7f8ecb67%2Ffactory.glb?1531347139209"
+
+
+></a-entity> 
+
+<!--Wind turbine by Google, under Creative Commons 2.0, Edited with material, https://poly.google.com/view/8Tke6WIyZtg-->
+<a-entity position="-3.81 0 -11" rotation="0 -36.3 0" scale="2 2 2"
+gltf-model="https://cdn.glitch.com/7317d2b0-96eb-4722-834b-db7d81561000%2FcoveredWave.glb?1537458588934"
+
+
+></a-entity> 
+
+
+
+
+
+
+<a-entity
+                        position="6.113 1.249 -5.81" 
+                        rotation="-40 -47.2 0" 
+                        scale="0.5 0.5 0.5"
+                        geometry="primitive: plane; width: 9; height: 6"
+                        material="color:black; side:double; transparent: true; opacity: .5"
+                        text="color: white;
+                              align: left;
+                              wrap-count: 26;
+                              margin: 0.8 0.8 0.8 0.8;
+                              value: EPRI’s Generation sector provides information, processes and technologies to improve the flexibility, 
+                              reliability, performance, and efficiency of the existing fossil-fueled and renewable energy generating fleet.">
+
+</a-entity>
+
+
+    </a-scene>
+  </body>
+</html>
